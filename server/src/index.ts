@@ -1,19 +1,19 @@
-import { serve } from "@hono/node-server";
-import { Hono } from "hono";
+import { serve } from '@hono/node-server'
+import { Hono } from 'hono'
 
-const app = new Hono();
+const app = new Hono()
 
-app.get("/api/dummy", (c) => {
-  return c.text("Hello Hono!");
-});
+app.get('/api/dummy', (c) => {
+  return c.text('Hello Hono!')
+})
 
 serve(
   {
     fetch: app.fetch,
-    hostname: "0.0.0.0",
+    hostname: '0.0.0.0',
     port: 3001,
   },
   (info) => {
-    console.log(`Server is running on http://localhost:${info.port}`);
+    console.log(`Server is running on http://localhost:${info.port}`)
   }
-);
+)
