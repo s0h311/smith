@@ -3,13 +3,14 @@ import { Hono } from "hono";
 
 const app = new Hono();
 
-app.get("/", (c) => {
+app.get("/api/dummy", (c) => {
   return c.text("Hello Hono!");
 });
 
 serve(
   {
     fetch: app.fetch,
+    hostname: "0.0.0.0",
     port: 3001,
   },
   (info) => {
