@@ -1,40 +1,26 @@
 {
-  // https://nitro.build/guide/typescript
-  // "extends": "./.nitro/types/tsconfig.json",
   "compilerOptions": {
-    // Module resolution
-    "target": "ESNext",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "target": "ES2023",
+    "lib": ["ES2023"],
     "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "jsx": "preserve",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
-
-    // Core checks
-    "strict": true,
-    "noEmit": true,
+    "types": ["node"],
     "skipLibCheck": true,
-    "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
 
+    /* Bundler mode */
+    "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
     "moduleDetection": "force",
+    "noEmit": true,
 
-    // Additional safety
-    "forceConsistentCasingInFileNames": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "useUnknownInCatchVariables": true,
+    /* Linting */
+    "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "erasableSyntaxOnly": true,
-    "noUncheckedSideEffectImports": true,
-    "noUncheckedIndexedAccess": true,
-
-    // Libs & paths
-    "lib": ["ESNext", "DOM"],
-    "types": ["node"],
-    "baseUrl": ".",
-  }
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": ["vite.config.ts"]
 }
