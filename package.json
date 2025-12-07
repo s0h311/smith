@@ -6,9 +6,16 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
+    
+    "build:server": "nitro build",
+    "dev:server": "HOST=0.0.0.0 PORT=3001 nitro dev",
+    "preview:server": "node .output/server/index.mjs",
+
     "fmt": "prettier --write ."
   },
   "dependencies": {
+    "h3": "2.0.1-rc.5",
+    "nitropack": "^2.12.9",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
