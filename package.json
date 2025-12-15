@@ -11,7 +11,9 @@
     "dev:server": "HOST=0.0.0.0 PORT=3001 nitro dev",
     "preview:server": "node .output/server/index.mjs",
     "lint": "eslint .",
-    "fmt": "prettier --write ."
+    "fmt": "prettier --write .",
+    "gen:migration": "drizzle-kit generate",
+    "migrate": "node --env-file=.env scripts/migrate.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.1",
