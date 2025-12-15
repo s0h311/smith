@@ -2,30 +2,34 @@
   "name": "smith",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    
+    "build": "pnpm build:app && pnpm build:server",
+    "preview": "pnpm preview:app && pnpm preview:server",
+    "dev:app": "vite",
+    "build:app": "tsc -b && vite build",
+    "preview:app": "vite preview",
     "build:server": "nitro build",
     "dev:server": "HOST=0.0.0.0 PORT=3001 nitro dev",
     "preview:server": "node .output/server/index.mjs",
-
+    "lint": "eslint .",
     "fmt": "prettier --write ."
   },
   "dependencies": {
+    "drizzle-orm": "^0.45.1",
     "h3": "2.0.1-rc.5",
     "nitropack": "^2.12.9",
+    "pg": "^8.16.3",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
     "@types/node": "^24.10.1",
+    "@types/pg": "^8.16.0",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.1.1",
     "babel-plugin-react-compiler": "^1.0.0",
+    "drizzle-kit": "^0.31.8",
     "eslint": "^9.39.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",

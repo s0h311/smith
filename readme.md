@@ -3,7 +3,7 @@
 ## TODOs
 
 - [x] Add nitro
-- [] Dockerize app
+- [x] Dockerize app
 - [] Add Database
 - [] Add Auth
 - [] Add Mail Service (optional)
