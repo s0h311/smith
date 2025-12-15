@@ -1,0 +1,28 @@
+services:
+  app:
+    build:
+      context: .
+    environment:
+      - DATABASE_CONNECTION_STRING=${DATABASE_CONNECTION_STRING}
+      - ENVIRONMENT=${ENVIRONMENT}
+      - BETTER_AUTH_SECRET=${BETTER_AUTH_SECRET}
+    depends_on:
+      postgres:
+        condition: service_started
+    networks:
+      - smith-network
+  postgres:
+    image: postgres:18-alpine3.23
+    restart: on-failure
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - smith_postgres_data:/var/lib/postgresql/data
+    networks:
+      - smith-network
+
+volumes:
+  smith_postgres_data:
+networks:
+  smith-network:
