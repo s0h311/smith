@@ -4,7 +4,7 @@
 
 - [x] Add nitro
 - [x] Dockerize app
-- [] Add Database
+- [x] Add Database
 - [] Add Auth
 - [] Add Mail Service (optional)
 - [] Add react-hook-form (optional)

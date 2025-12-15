@@ -16,6 +16,7 @@
     "migrate": "node --env-file=.env scripts/migrate.ts"
   },
   "dependencies": {
+    "better-auth": "^1.4.7",
     "drizzle-orm": "^0.45.1",
     "h3": "2.0.1-rc.5",
     "nitropack": "^2.12.9",
