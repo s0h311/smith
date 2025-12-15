@@ -1,0 +1,12 @@
+.vscode
+.idea
+.cursor
+
+node_modules
+dist
+.nitro
+.output
+
+.DS_Store
+
+.env

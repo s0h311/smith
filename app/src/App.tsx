@@ -9,5 +9,11 @@ export default function App() {
       .then((r) => setData(r))
   }, [])
 
-  return <>{data ? <div dangerouslySetInnerHTML={{ __html: data }}></div> : <div>vite app</div>}</>
+  return (
+    <div>
+      <h1>THIS IS THE APP</h1>
+
+      <div>{data ? <div dangerouslySetInnerHTML={{ __html: data }}></div> : <div>vite app</div>}</div>
+    </div>
+  )
 }

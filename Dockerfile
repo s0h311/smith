@@ -10,7 +10,11 @@ RUN yes | pnpm install
 
 COPY . .
 
-RUN pnpm build
+RUN pnpm build:app
+
+RUN cp -r dist/* public/
+
+RUN pnpm build:server
 
 RUN chmod +x start.sh
 
