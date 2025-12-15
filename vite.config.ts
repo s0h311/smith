@@ -3,6 +3,10 @@ import react from '@vitejs/plugin-react'
 
 // https://vite.dev/config/
 export default defineConfig({
+  root: `${import.meta.dirname}/app`,
+  build: {
+    outDir: `${import.meta.dirname}/dist`,
+  },
   plugins: [
     react({
       babel: {

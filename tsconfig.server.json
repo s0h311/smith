@@ -30,5 +30,5 @@
     "lib": ["ESNext", "DOM"],
     "baseUrl": "."
   },
-  "include": ["src/api"]
+  "include": ["server/"]
 }
