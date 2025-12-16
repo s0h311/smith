@@ -30,8 +30,8 @@
     "lib": ["ESNext", "DOM"],
     "baseUrl": ".",
     "paths": {
-      "@@/*": ["./*"],
-      "@/*": ["./server/*"]
+      "~~/*": ["./*"],
+      "~/*": ["./server/*"]
     }
   },
   "include": ["server/"],
