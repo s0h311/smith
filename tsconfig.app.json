@@ -23,9 +23,11 @@
     "erasableSyntaxOnly": true,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+  
+    "baseUrl": ".",
     "paths": {
-      "~~/*": ["./*"],
-      "~/*": ["./server/*"]
+      "@@/*": ["./*"],
+      "@/*": ["./app/*"]
     }
   },
   "include": ["app/src"],
