@@ -11,7 +11,7 @@ export default function App() {
 
   return (
     <div>
-      <h1>THIS IS THE APP</h1>
+      <h1 className='text-2xl'>THIS IS THE APP</h1>
 
       <div>{data ? <div dangerouslySetInnerHTML={{ __html: data }}></div> : <div>vite app</div>}</div>
     </div>
