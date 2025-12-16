@@ -1,5 +1,5 @@
 services:
-  smith-app:
+  app:
     build:
       context: .
     environment:
@@ -7,16 +7,22 @@ services:
       ENVIRONMENT: ${ENVIRONMENT}
       BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET}
     depends_on:
-      smith-postgres:
+      postgres:
         condition: service_started
-  smith-postgres:
+    networks:
+      - smith-network
+  postgres:
     image: postgres:18-alpine3.23
     restart: on-failure
     environment:
       POSTGRES_USER: "smith"
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - smith-postgres_data:/var/lib/postgresql/data
+      - smith_postgres_data:/var/lib/postgresql/data
+    networks:
+      - smith-network
 
 volumes:
-  smith-postgres_data:
+  smith_postgres_data:
+networks:
+  smith-network:
