@@ -6,7 +6,8 @@
 - ✅ Dockerize app
 - ✅ Add Database
 - ✅ Add Auth
-- 🛠️ Add shadcn
+- ✅ Add Tanstack Router
+- ✅ Add shadcn
 - 🛠️ Add Mail Service (optional)
 - 🛠️ Add react-hook-form (optional)
 - 🛠️ Add llms.txt ref for nitro
