@@ -12,3 +12,5 @@ dist
 *.yaml
 *.json
 *.d.ts
+
+*.gen.ts

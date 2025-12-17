@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'node:path'
+import { tanstackRouter } from '@tanstack/router-plugin/vite'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -11,6 +12,12 @@ export default defineConfig({
     outDir: `${import.meta.dirname}/dist`,
   },
   plugins: [
+    tanstackRouter({
+      target: 'react',
+      autoCodeSplitting: true,
+      routesDirectory: resolve(import.meta.dirname, './app/src/pages'),
+      generatedRouteTree: resolve(import.meta.dirname, './app/src/routeTree.gen.ts'),
+    }),
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler']],
