@@ -10,3 +10,8 @@ dist
 .DS_Store
 
 .env
+
+readme.md
+compose.local.yaml
+.gitignore
+.prettierignore

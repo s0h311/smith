@@ -6,6 +6,7 @@ node_modules
 dist
 .nitro
 .output
+.tanstack
 
 .DS_Store
 
