@@ -5,8 +5,8 @@ const from = `"${process.env.MAIL_FROM_NAME!}" <${process.env.MAIL_FROM_ADDRESS!
 
 const transport = createTransport({
   host: process.env.MAIL_SMTP_HOST!,
-  port: 465,
-  secure: true,
+  port: 587,
+  secure: false,
   auth: {
     user: process.env.MAIL_SMTP_USER!,
     pass: process.env.MAIL_SMTP_PASSWORD!,
