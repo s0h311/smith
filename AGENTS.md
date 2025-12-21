@@ -18,6 +18,10 @@ The server source code is under "server" directory.
 The "shared" directory is where the database schema is defined. The types are used both
 by frontend and server.
 
+## Rules
+
+- Use `pnpm dlx` instead of `npx` for commands.
+
 ## Documentation to used technologies
 
 [Drizzle as ORM](https://orm.drizzle.team/llms.txt)
