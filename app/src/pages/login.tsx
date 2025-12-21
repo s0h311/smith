@@ -1,10 +1,10 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/login')({
-  component: RouteComponent,
+  component: LoginPage,
 })
 
-function RouteComponent() {
+function LoginPage() {
   return (
     <>
       <h1>Login page</h1>

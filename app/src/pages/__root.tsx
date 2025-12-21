@@ -1,10 +1,10 @@
 import { Outlet, createRootRoute } from '@tanstack/react-router'
 
 export const Route = createRootRoute({
-  component: RootComponent,
+  component: Root,
 })
 
-function RootComponent() {
+function Root() {
   return (
     <>
       <Outlet />
