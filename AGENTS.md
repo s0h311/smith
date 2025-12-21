@@ -21,6 +21,7 @@ by frontend and server.
 ## Rules
 
 - Use `pnpm dlx` instead of `npx` for commands.
+- The code should explain itself. To many comments decreases readability.
 
 ## Documentation to used technologies
 
