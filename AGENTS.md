@@ -31,3 +31,4 @@ by frontend and server.
 [Tanstack router for frontend routing](https://tanstack.com/llms.txt)
 [Better Auth for authentication](https://www.better-auth.com/llms.txt)
 [Shadcn UI for UI](https://ui.shadcn.com/llms.txt)
+[react-hook-form for form handling](https://context7.com/react-hook-form/documentation/llms.txt?tokens=10000)
