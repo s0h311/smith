@@ -12,7 +12,14 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
 import { authClient } from '@/libs/Auth/authClient'
 import { useState } from 'react'
 
@@ -62,7 +69,7 @@ function SignupPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex min-h-screen w-full items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Sign Up</CardTitle>
@@ -111,18 +118,20 @@ function SignupPage() {
                 )}
               />
               
-              {error && <div className="text-red-500 text-sm">{error}</div>}
+              {error && <div className="text-destructive text-sm">{error}</div>}
 
               <Button type="submit" className="w-full">Sign Up</Button>
             </form>
           </Form>
-          <div className="mt-4 text-center text-sm">
-            Already have an account?{' '}
-            <Link to="/login" className="underline">
+        </CardContent>
+        <CardFooter className="flex justify-center text-sm text-muted-foreground">
+          <div className="flex gap-1">
+            <span>Already have an account?</span>
+            <Link to="/login" className="text-primary hover:underline">
               Login
             </Link>
           </div>
-        </CardContent>
+        </CardFooter>
       </Card>
     </div>
   )
