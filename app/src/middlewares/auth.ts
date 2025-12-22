@@ -1,7 +1,7 @@
 import { authClient } from '../libs/Auth/authClient'
 import { redirect } from '@tanstack/react-router'
 
-export default async function (locationHref: string): Promise<void | never> {
+export default async function (locationHref: string): Promise<true | never> {
   const session = await authClient.getSession()
 
   if (!session.data) {
@@ -12,4 +12,6 @@ export default async function (locationHref: string): Promise<void | never> {
       },
     })
   }
+
+  return true
 }

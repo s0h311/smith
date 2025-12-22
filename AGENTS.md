@@ -24,6 +24,7 @@ by frontend and server.
 - The code should explain itself. Too many comments decreases readability.
 - Only lint when the implementation is done and all the steps are completed.
   It saves time
+- Changes will be commited to git by the user. The agents should only focus on the changes.
 
 ## Documentation to used technologies
 
