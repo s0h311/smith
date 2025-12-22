@@ -10,7 +10,7 @@
 
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as SignupRouteImport } from './pages/signup'
-import { Route as PasswordResetRouteImport } from './pages/passwordReset'
+import { Route as ResetPasswordRouteImport } from './pages/resetPassword'
 import { Route as LoginRouteImport } from './pages/login'
 import { Route as IndexRouteImport } from './pages/index'
 
@@ -19,9 +19,9 @@ const SignupRoute = SignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PasswordResetRoute = PasswordResetRouteImport.update({
-  id: '/passwordReset',
-  path: '/passwordReset',
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/resetPassword',
+  path: '/resetPassword',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -38,34 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/passwordReset': typeof PasswordResetRoute
+  '/resetPassword': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/passwordReset': typeof PasswordResetRoute
+  '/resetPassword': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
-  '/passwordReset': typeof PasswordResetRoute
+  '/resetPassword': typeof ResetPasswordRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login' | '/passwordReset' | '/signup'
+  fullPaths: '/' | '/login' | '/resetPassword' | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login' | '/passwordReset' | '/signup'
-  id: '__root__' | '/' | '/login' | '/passwordReset' | '/signup'
+  to: '/' | '/login' | '/resetPassword' | '/signup'
+  id: '__root__' | '/' | '/login' | '/resetPassword' | '/signup'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
-  PasswordResetRoute: typeof PasswordResetRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SignupRoute: typeof SignupRoute
 }
 
@@ -78,11 +78,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/passwordReset': {
-      id: '/passwordReset'
-      path: '/passwordReset'
-      fullPath: '/passwordReset'
-      preLoaderRoute: typeof PasswordResetRouteImport
+    '/resetPassword': {
+      id: '/resetPassword'
+      path: '/resetPassword'
+      fullPath: '/resetPassword'
+      preLoaderRoute: typeof ResetPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -105,7 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
-  PasswordResetRoute: PasswordResetRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SignupRoute: SignupRoute,
 }
 export const routeTree = rootRouteImport

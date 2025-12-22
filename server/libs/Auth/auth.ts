@@ -18,4 +18,11 @@ export const auth = betterAuth({
       verification,
     },
   }),
+  trustedOrigins: () => {
+    if (process.env.ENVIRONMENT === 'development') {
+      return ['http://localhost:3000']
+    }
+
+    return ['*.rock-science.com']
+  },
 })
