@@ -2,12 +2,23 @@ import { betterAuth } from 'better-auth'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { db } from '../Database/client'
 import { account, session, user, verification } from '~~/shared/Database/schemas/auth'
+import { sendMail } from '../Mail/client'
 
 export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: true,
     requireEmailVerification: false,
+    sendResetPassword: async ({ user, url, token: _token }, _request) => {
+      await sendMail({
+        recipients: [user.email],
+        subject: 'Reset your password',
+        text: `Click the link to reset your password: ${url}`,
+      })
+    },
+    onPasswordReset: async ({ user }, _request) => {
+      console.log(`Password for user ${user.email} has been reset.`)
+    },
   },
   database: drizzleAdapter(db, {
     provider: 'pg',
