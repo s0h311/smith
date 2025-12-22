@@ -22,6 +22,8 @@ by frontend and server.
 
 - Use `pnpm dlx` instead of `npx` for commands.
 - The code should explain itself. Too many comments decreases readability.
+- Only lint when the implementation is done and all the steps are completed.
+  It saves time
 
 ## Documentation to used technologies
 
