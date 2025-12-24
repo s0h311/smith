@@ -25,10 +25,11 @@
     "noUncheckedSideEffectImports": true,
   
     "baseUrl": ".",
+
     "paths": {
       "@@/*": ["./*"],
-      "@/*": ["./app/src/*"]
+      "@/*": ["./app/*"],
     }
   },
-  "include": ["app/src"],
+  "include": ["app/"],
 }

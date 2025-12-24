@@ -1,6 +1,6 @@
-import { defineEventHandler, toWebRequest } from 'h3'
-import { auth } from '~~/server/libs/Auth/auth'
+import { defineEventHandler } from 'nitro/h3'
+import { auth } from '../../libs/Auth/auth'
 
 export default defineEventHandler((event) => {
-  return auth.handler(toWebRequest(event))
+  return auth.handler(event.req)
 })

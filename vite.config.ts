@@ -3,10 +3,10 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { resolve } from 'node:path'
 import { tanstackRouter } from '@tanstack/router-plugin/vite'
+import { nitro } from 'nitro/vite'
 
-// https://vite.dev/config/
 export default defineConfig({
-  root: `${import.meta.dirname}/app`,
+  root: `${import.meta.dirname}`,
   build: {
     emptyOutDir: true,
     outDir: `${import.meta.dirname}/dist`,
@@ -15,9 +15,10 @@ export default defineConfig({
     tanstackRouter({
       target: 'react',
       autoCodeSplitting: true,
-      routesDirectory: resolve(import.meta.dirname, './app/src/pages'),
-      generatedRouteTree: resolve(import.meta.dirname, './app/src/routeTree.gen.ts'),
+      routesDirectory: resolve(import.meta.dirname, './app/pages'),
+      generatedRouteTree: resolve(import.meta.dirname, './app/routeTree.gen.ts'),
     }),
+    nitro(),
     react({
       babel: {
         plugins: [['babel-plugin-react-compiler']],
@@ -27,14 +28,11 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': resolve(import.meta.dirname, './app/src'),
+      '@': resolve(import.meta.dirname, './app'),
     },
   },
   server: {
     host: '0.0.0.0',
     port: 3000,
-    proxy: {
-      '/api': 'http://localhost:3001',
-    },
   },
 })

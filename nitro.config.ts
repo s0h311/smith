@@ -1,15 +1,5 @@
-import { defineNitroConfig } from 'nitropack/config'
+import { defineConfig } from 'nitro'
 
-// https://nitro.build/config
-export default defineNitroConfig({
-  compatibilityDate: 'latest',
-  srcDir: 'server',
-  imports: false,
-  serveStatic: true,
-  publicAssets: [
-    {
-      baseURL: '/',
-      dir: `${import.meta.dirname}/public`,
-    },
-  ],
+export default defineConfig({
+  serverDir: './server',
 })
