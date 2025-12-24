@@ -11,6 +11,8 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Separator } from '@/components/ui/separator'
+import { ChangeEmailForm } from '@/components/profile/ChangeEmailForm'
+import { ChangePasswordForm } from '@/components/profile/ChangePasswordForm'
 
 export const Route = createFileRoute('/dashboard/profile')({
   component: DashboardProfilePage,
@@ -57,18 +59,20 @@ function DashboardProfilePage() {
                 id='name'
                 value={user.name}
                 readOnly
+                className="bg-muted"
               />
-            </div>
-            <div className='grid gap-2'>
-              <Label htmlFor='email'>Email Address</Label>
-              <Input
-                id='email'
-                value={user.email}
-                readOnly
-              />
+              <p className="text-[0.8rem] text-muted-foreground">
+                Name cannot be changed.
+              </p>
             </div>
           </CardContent>
         </Card>
+
+        <ChangeEmailForm />
+
+        <div className="md:col-span-2">
+            <ChangePasswordForm />
+        </div>
       </div>
     </div>
   )

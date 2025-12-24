@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
-import { NavUser } from '@/components/ui/navUser'
+import { NavUser } from '@/components/ui/nav-user'
 import { authClient } from '@/libs/Auth/authClient'
 
 export function DashboardSidebar() {
@@ -28,11 +28,10 @@ export function DashboardSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link
-                    to="/dashboard"
+                    to='/dashboard'
                     activeOptions={{ exact: true }}
                     activeProps={{
-                      className:
-                        'bg-sidebar-accent text-sidebar-accent-foreground font-medium',
+                      className: 'bg-sidebar-accent text-sidebar-accent-foreground font-medium',
                     }}
                   >
                     <Home />
@@ -43,10 +42,9 @@ export function DashboardSidebar() {
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
                   <Link
-                    to="/dashboard/profile"
+                    to='/dashboard/profile'
                     activeProps={{
-                      className:
-                        'bg-sidebar-accent text-sidebar-accent-foreground font-medium',
+                      className: 'bg-sidebar-accent text-sidebar-accent-foreground font-medium',
                     }}
                   >
                     <User />

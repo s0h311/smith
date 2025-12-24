@@ -32,6 +32,15 @@ export const auth = betterAuth({
       },
     },
   },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url }) => {
+      await sendMail({
+        recipients: [user.email],
+        subject: 'Verify new email',
+        text: `Click the link to verify email: ${url}`,
+      })
+    },
+  },
   database: drizzleAdapter(db, {
     provider: 'pg',
     schema: {
