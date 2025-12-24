@@ -20,6 +20,18 @@ export const auth = betterAuth({
       console.log(`Password for user ${user.email} has been reset.`)
     },
   },
+  user: {
+    changeEmail: {
+      enabled: true,
+      sendChangeEmailConfirmation: async ({ user, newEmail, url }) => {
+        await sendMail({
+          recipients: [user.email],
+          subject: 'Approve email change',
+          text: `Click the link to approve the change to ${newEmail}: ${url}`,
+        })
+      },
+    },
+  },
   database: drizzleAdapter(db, {
     provider: 'pg',
     schema: {
