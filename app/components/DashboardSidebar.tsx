@@ -3,6 +3,7 @@ import { Home, User } from 'lucide-react'
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -10,8 +11,13 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar'
+import { NavUser } from '@/components/ui/navUser'
+import { authClient } from '@/libs/Auth/authClient'
 
 export function DashboardSidebar() {
+  const { data: session } = authClient.useSession()
+  const user = session?.user
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -52,6 +58,17 @@ export function DashboardSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        {user && (
+          <NavUser
+            user={{
+              name: user.name,
+              email: user.email,
+              avatar: user.image || '',
+            }}
+          />
+        )}
+      </SidebarFooter>
     </Sidebar>
   )
 }
