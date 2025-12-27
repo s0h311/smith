@@ -2,9 +2,7 @@ services:
   postgres:
     image: postgres:18-alpine3.23
     restart: on-failure
-    environment:
-      POSTGRES_USER: "smith"
-      POSTGRES_PASSWORD: "VlzByjlaU1fx1Ren"
+    env_file: ".env"
     ports:
       - "5432:5432"
     volumes:
