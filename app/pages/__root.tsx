@@ -3,7 +3,7 @@
 import '../index.css'
 
 import type { ReactNode } from 'react'
-import { Outlet, createRootRoute, HeadContent, Scripts, } from '@tanstack/react-router'
+import { Outlet, createRootRoute, HeadContent, Scripts } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 export const Route = createRootRoute({
@@ -33,7 +33,7 @@ function RootComponent() {
   return (
     <RootDocument>
       <QueryClientProvider client={queryClient}>
-            <Outlet />
+        <Outlet />
       </QueryClientProvider>
     </RootDocument>
   )
