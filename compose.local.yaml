@@ -6,7 +6,7 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - <app-name>_postgres_data:/var/lib/postgresql/data
+      - <app-name>_postgres:/var/lib/postgresql
 
 volumes:
-  <app-name>_postgres_data:
+  <app-name>_postgres:

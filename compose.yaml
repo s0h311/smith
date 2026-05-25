@@ -19,11 +19,11 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-      - <app-name>_postgres_data:/var/lib/postgresql/data
+      - <app-name>_postgres:/var/lib/postgresql
     networks:
       - <app-name>-network
 
 volumes:
-  <app-name>_postgres_data:
+  <app-name>_postgres:
 networks:
   <app-name>-network:
