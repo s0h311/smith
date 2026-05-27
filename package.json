@@ -1,0 +1,19 @@
+{
+  "name": "smith",
+  "version": "0.0.1",
+  "description": "Generates an empty TanStack Start project that is optimized for agentic engineering",
+  "license": "Apache-2.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "fmt": "oxfmt"
+  },
+  "dependencies": {
+    "citty": "^0.2.2",
+    "consola": "^3.4.2"
+  },
+  "devDependencies": {
+    "oxfmt": "^0.52.0"
+  },
+  "packageManager": "pnpm@11.1.2"
+}
