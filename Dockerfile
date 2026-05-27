@@ -7,7 +7,7 @@ RUN corepack enable
 COPY package.json .
 COPY pnpm-lock.yaml .
 COPY pnpm-workspace.yaml.
-RUN yes | pnpm install
+RUN pnpm install -y
 
 COPY . .
 

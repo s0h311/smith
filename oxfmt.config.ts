@@ -6,5 +6,5 @@ export default defineConfig({
   printWidth: 120,
   jsxSingleQuote: true,
   singleAttributePerLine: true,
-  ignorePatterns: ['*.gen.ts', 'server/libs/Database/migrations', 'settings.json'],
+  ignorePatterns: ['*.gen.ts', 'server/infrastructure/Database/migrations'],
 })
