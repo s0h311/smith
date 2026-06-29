@@ -41,8 +41,17 @@ function clone({ name }: Args): void {
   cpSync(baseProjectPath, newAppDir, { recursive: true })
 
   // SET APP NAME AND SECRETS
-  const files = globSync([`${newAppDir}/**/*`, `${newAppDir}/.*`], {
-    exclude: ['pnpm-lock.yaml', 'pnpm-workspace.yaml', 'node_modules'],
+
+  const excludes = ['pnpm-lock.yaml', 'pnpm-workspace.yaml', 'node_modules']
+
+  const files = globSync([`${newAppDir}/**/*`, `${newAppDir}/.*`]).filter((file) => {
+    for (const exclude of excludes) {
+      if (file.includes(exclude)) {
+        return false
+      }
+    }
+
+    return true
   })
 
   const dbPassword = randomBytes(12).toString('base64')
