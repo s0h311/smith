@@ -5,3 +5,4 @@ supportedArchitectures:
     - linux
   cpu:
     - arm64
+    - x64
