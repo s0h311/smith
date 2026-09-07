@@ -2,6 +2,8 @@ FROM node:26-alpine3.24
 
 WORKDIR /app
 
+RUN npm i -g corepack
+
 RUN corepack enable
 
 COPY package.json .
