@@ -7,7 +7,9 @@
     "preview": "vite preview",
     "test": "vitest",
     "lint": "oxlint --fix",
-    "fmt": "oxfmt"
+    "gen:migration": "drizzle-kit generate",
+    "migrate": "node --env-file=.env scripts/migrate.ts",
+    "matrix": "node --env-file .env <path-to-matrix>/src/index.ts"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.3.3",

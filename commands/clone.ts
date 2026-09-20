@@ -1,8 +1,15 @@
-import { cpSync, globSync, readFileSync, writeFileSync, lstatSync } from 'node:fs'
+import { cpSync, globSync, lstatSync, renameSync, existsSync } from 'node:fs'
 import { defineCommand } from 'citty'
 import { normalize } from 'node:path'
 import { consola } from 'consola'
 import { randomBytes } from 'node:crypto'
+import { replaceInFileSync } from './utils.ts'
+
+const BASE_TEMPLATE_PATH = `${import.meta.dirname}/../templates/base`
+const APP_NAME_PLACEHOLDER = '<app-name>'
+const ENV_DB_PASSWORD_PLACEHOLDER = '<db-password>'
+const MATRIX_PATH_PLACEHOLDER = '<path-to-matrix>'
+const MATRIX_GITHUB_USERNAME_PLACEHOLDER = '<github-username>'
 
 export default defineCommand({
   meta: {
@@ -18,6 +25,9 @@ export default defineCommand({
 
 type Args = {
   name: string
+  githubUsername?: string
+  withAuth: boolean
+  withSkills: boolean
 }
 
 async function collectArgs(): Promise<Args> {
@@ -25,23 +35,42 @@ async function collectArgs(): Promise<Args> {
     type: 'text',
   })
 
+  const githubUsername = await consola.prompt('Github username', {
+    type: 'text',
+  })
+
+  const withAuth = await consola.prompt('Should auth be included?', {
+    type: 'confirm',
+  })
+
+  const withSkills = await consola.prompt('Should agent skills be included?', {
+    type: 'confirm',
+  })
+
   return {
     name,
+    githubUsername,
+    withAuth,
+    withSkills,
   }
 }
 
-const APP_NAME_PLACEHOLDER = '<app-name>'
-const ENV_DB_PASSWORD_PLACEHOLDER = '<db-password>'
-
-function clone({ name }: Args): void {
+function clone({ name, githubUsername, withAuth, withSkills }: Args): void {
   // COPY FILES
-  const baseProjectPath = normalize(`${import.meta.dirname}/../base`)
+  const baseTemplatePath = normalize(BASE_TEMPLATE_PATH)
   const newAppDir = normalize(`${process.cwd()}/${name}`)
 
-  cpSync(baseProjectPath, newAppDir, { recursive: true })
+  cpSync(baseTemplatePath, newAppDir, { recursive: true })
+
+  const envExamplePath = `${newAppDir}/.env.example`
+  const envPath = `${newAppDir}/.env`
+
+  renameSync(envExamplePath, envPath)
+
+  // SETUP MATRIX
+  setupMatrix(newAppDir, githubUsername)
 
   // SET APP NAME AND SECRETS
-
   const excludes = ['pnpm-lock.yaml', 'pnpm-workspace.yaml', 'node_modules']
 
   const files = globSync([`${newAppDir}/**/*`, `${newAppDir}/.*`]).filter((file) => {
@@ -54,19 +83,63 @@ function clone({ name }: Args): void {
     return true
   })
 
-  const dbPassword = randomBytes(12).toString('base64')
+  const dbPassword = randomBytes(12).toString('base64').replaceAll('+', 'a').replaceAll('/', 'z')
 
   for (const file of files) {
     if (lstatSync(file).isDirectory()) {
       continue
     }
 
-    const content = readFileSync(file, { encoding: 'utf-8' })
+    if (file.includes('.matrix')) {
+      console.log(file)
+    }
 
-    const newContent = content
-      .replaceAll(APP_NAME_PLACEHOLDER, name)
-      .replaceAll(ENV_DB_PASSWORD_PLACEHOLDER, dbPassword)
-
-    writeFileSync(file, newContent, { encoding: 'utf-8' })
+    replaceInFileSync({
+      filePath: file,
+      replacements: [
+        { searchString: APP_NAME_PLACEHOLDER, replacement: name },
+        { searchString: ENV_DB_PASSWORD_PLACEHOLDER, replacement: dbPassword },
+      ],
+    })
   }
+
+  // CONFIGURE AUTH
+  if (withAuth) {
+    // TODO
+  }
+
+  // ADD AGENT SKILLS
+  if (withSkills) {
+    // TODO
+  }
+}
+
+function setupMatrix(newAppDir: string, githubUsername: Args['githubUsername']): void {
+  const matrixPath = normalize(`${process.cwd()}/matrix`)
+  const matrixFound = existsSync(matrixPath)
+
+  if (!matrixFound) {
+    consola.info('Replace <path-to-matrix> in package.json with actual path to Matrix')
+
+    return
+  }
+
+  const packageJsonPath = `${newAppDir}/package.json`
+
+  replaceInFileSync({
+    filePath: packageJsonPath,
+    replacements: [{ searchString: MATRIX_PATH_PLACEHOLDER, replacement: matrixPath }],
+  })
+
+  if (!githubUsername) {
+    consola.info('Replace <github-username> in matrix.config.json with actual Github username')
+    return
+  }
+
+  const matrixConfig = `${newAppDir}/matrix.config.json`
+
+  replaceInFileSync({
+    filePath: matrixConfig,
+    replacements: [{ searchString: MATRIX_GITHUB_USERNAME_PLACEHOLDER, replacement: githubUsername }],
+  })
 }
