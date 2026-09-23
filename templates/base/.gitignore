@@ -11,8 +11,6 @@ dist
 
 .DS_Store
 
-.matrix/last_commits.json
-.matrix/open_issues.json
-.matrix/*_prompt.md
+.matrix
 
 .env

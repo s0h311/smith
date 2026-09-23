@@ -3,13 +3,29 @@ import { defineCommand } from 'citty'
 import { normalize } from 'node:path'
 import { consola } from 'consola'
 import { randomBytes } from 'node:crypto'
-import { replaceInFileSync } from './utils.ts'
+import { addNpmScript, appendToFileSync, replaceInFileSync } from './utils.ts'
+import { execSync } from 'node:child_process'
 
 const BASE_TEMPLATE_PATH = `${import.meta.dirname}/../templates/base`
 const APP_NAME_PLACEHOLDER = '<app-name>'
 const ENV_DB_PASSWORD_PLACEHOLDER = '<db-password>'
 const MATRIX_PATH_PLACEHOLDER = '<path-to-matrix>'
 const MATRIX_GITHUB_USERNAME_PLACEHOLDER = '<github-username>'
+const DRIZZLE_ADDITIONAL_SCHEMAS_PLACEHOLDER = ' <additional-schemas>'
+
+const AUTH_SCHEMA_DESTINATION = 'server/infrastructure/Database/schemas/auth.ts'
+const AUTH_TEMPLATE_FILES = {
+  [`${import.meta.dirname}/../templates/server/infrastructure/Auth`]: 'server/infrastructure/Auth',
+  [`${import.meta.dirname}/../templates/server/infrastructure/Database/schemas/auth.ts`]: AUTH_SCHEMA_DESTINATION,
+  [`${import.meta.dirname}/../templates/server/infrastructure/Mail`]: 'server/infrastructure/Mail',
+  [`${import.meta.dirname}/../templates/server/infrastructure/Utils`]: 'server/infrastructure/Utils',
+  [`${import.meta.dirname}/../templates/server/infrastructure/Utils`]: 'server/infrastructure/Utils',
+  [`${import.meta.dirname}/../templates/app/libs/Auth`]: 'app/libs/Auth',
+} as const
+
+const AGENT_SKILLS = {
+  'https://github.com/mattpocock/skills': ['grill-with-docs', 'grilling'],
+} as const
 
 export default defineCommand({
   meta: {
@@ -70,6 +86,11 @@ function clone({ name, githubUsername, withAuth, withSkills }: Args): void {
   // SETUP MATRIX
   setupMatrix(newAppDir, githubUsername)
 
+  // CONFIGURE AUTH
+  if (withAuth) {
+    setupAuth(newAppDir)
+  }
+
   // SET APP NAME AND SECRETS
   const excludes = ['pnpm-lock.yaml', 'pnpm-workspace.yaml', 'node_modules']
 
@@ -99,18 +120,14 @@ function clone({ name, githubUsername, withAuth, withSkills }: Args): void {
       replacements: [
         { searchString: APP_NAME_PLACEHOLDER, replacement: name },
         { searchString: ENV_DB_PASSWORD_PLACEHOLDER, replacement: dbPassword },
+        { searchString: DRIZZLE_ADDITIONAL_SCHEMAS_PLACEHOLDER, replacement: withAuth ? AUTH_SCHEMA_DESTINATION : '' },
       ],
     })
   }
 
-  // CONFIGURE AUTH
-  if (withAuth) {
-    // TODO
-  }
-
   // ADD AGENT SKILLS
   if (withSkills) {
-    // TODO
+    setupAgentSkills(newAppDir)
   }
 }
 
@@ -142,4 +159,48 @@ function setupMatrix(newAppDir: string, githubUsername: Args['githubUsername']):
     filePath: matrixConfig,
     replacements: [{ searchString: MATRIX_GITHUB_USERNAME_PLACEHOLDER, replacement: githubUsername }],
   })
+}
+
+function setupAuth(newAppDir: string): void {
+  for (const [template, destination] of Object.entries(AUTH_TEMPLATE_FILES)) {
+    cpSync(template, `${newAppDir}/${destination}`, { recursive: true })
+  }
+
+  execSync('pnpm add better-auth pino react-email nodemailer', { cwd: newAppDir })
+  execSync('pnpm add -D @react-email/ui pino-pretty', { cwd: newAppDir })
+
+  const BETTER_AUTH_SECRET = randomBytes(32).toString('base64').replaceAll('+', 'a').replaceAll('/', 'z')
+
+  const envVars = {
+    BETTER_AUTH_SECRET,
+    MAIL_SMTP_HOST: '',
+    MAIL_SMTP_USER: '',
+    MAIL_SMTP_PASSWORD: '',
+    MAIL_FROM_NAME: '',
+    MAIL_FROM_ADDRESS: '',
+  }
+
+  const appendingEnvLines = Object.entries(envVars)
+    .map(([key, value]) => `${key}="${value}"`)
+    .join('\n')
+
+  appendToFileSync({
+    filePath: `${newAppDir}/.env`,
+    appendingContent: appendingEnvLines,
+    leadingLineBreak: true,
+  })
+
+  addNpmScript({
+    name: 'gen:schema',
+    cmd: 'pnpm dlx @better-auth/cli@latest generate --config ./server/infrastructure/Auth/auth.ts --output ./server/infrastructure/Database/schemas/auth.ts',
+    packageJsonRoot: newAppDir,
+  })
+}
+
+function setupAgentSkills(newAppDir: string): void {
+  for (const [author, skills] of Object.entries(AGENT_SKILLS)) {
+    const cmd = `pnpm dlx skills add ${author} --skill ${skills.join(' ')} -y`
+
+    execSync(cmd, { cwd: newAppDir })
+  }
 }

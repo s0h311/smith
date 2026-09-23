@@ -1,3 +1,4 @@
+import { execSync } from 'node:child_process'
 import { readFileSync, writeFileSync } from 'node:fs'
 
 export function replaceInFileSync({
@@ -16,4 +17,32 @@ export function replaceInFileSync({
   }
 
   writeFileSync(filePath, newContent, { encoding: 'utf-8' })
+}
+
+export function appendToFileSync({
+  filePath,
+  appendingContent,
+  leadingLineBreak,
+}: {
+  filePath: string
+  appendingContent: string
+  leadingLineBreak: boolean
+}): void {
+  const content = readFileSync(filePath, { encoding: 'utf-8' })
+
+  const newContent = `${content}${leadingLineBreak ? '\n' : ''}${appendingContent}`
+
+  writeFileSync(filePath, newContent, { encoding: 'utf-8' })
+}
+
+export function addNpmScript({
+  name,
+  cmd,
+  packageJsonRoot,
+}: {
+  name: string
+  cmd: string
+  packageJsonRoot: string
+}): void {
+  execSync(`npm pkg set scripts.${name}="${cmd}"`, { cwd: packageJsonRoot })
 }
