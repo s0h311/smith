@@ -120,7 +120,10 @@ function clone({ name, githubUsername, withAuth, withSkills }: Args): void {
       replacements: [
         { searchString: APP_NAME_PLACEHOLDER, replacement: name },
         { searchString: ENV_DB_PASSWORD_PLACEHOLDER, replacement: dbPassword },
-        { searchString: DRIZZLE_ADDITIONAL_SCHEMAS_PLACEHOLDER, replacement: withAuth ? AUTH_SCHEMA_DESTINATION : '' },
+        {
+          searchString: DRIZZLE_ADDITIONAL_SCHEMAS_PLACEHOLDER,
+          replacement: withAuth ? `'${AUTH_SCHEMA_DESTINATION}',` : '',
+        },
       ],
     })
   }
