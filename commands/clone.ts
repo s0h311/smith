@@ -24,7 +24,24 @@ const AUTH_TEMPLATE_FILES = {
 } as const
 
 const AGENT_SKILLS = {
-  'https://github.com/mattpocock/skills': ['grill-with-docs', 'grilling'],
+  'https://github.com/mattpocock/skills': [
+    'grill-with-docs',
+    'grilling',
+    'code-review',
+    'codebase-design',
+    'domain-modeling',
+    'implement',
+    'implement-spec',
+    'improve-codebase-architecture',
+    'prototype',
+    'research',
+    'setup-matt-pocock-skills',
+    'tdd',
+    'to-tickets',
+    'to-spec',
+    'triage',
+    'writing-for-agents',
+  ],
 } as const
 
 export default defineCommand({
@@ -132,6 +149,9 @@ function clone({ name, githubUsername, withAuth, withSkills }: Args): void {
   if (withSkills) {
     setupAgentSkills(newAppDir)
   }
+
+  // SETUP GIT
+  setupGit({ githubUsername, name, newAppDir })
 }
 
 function setupMatrix(newAppDir: string, githubUsername: Args['githubUsername']): void {
@@ -206,4 +226,24 @@ function setupAgentSkills(newAppDir: string): void {
 
     execSync(cmd, { cwd: newAppDir })
   }
+}
+
+function setupGit({
+  githubUsername,
+  name,
+  newAppDir,
+}: {
+  githubUsername: Args['githubUsername']
+  name: string
+  newAppDir: string
+}): void {
+  const commands = ['git init', 'git add -A', 'git commit -m "init with smith"']
+
+  if (githubUsername) {
+    commands.push(`git remote add origin git@github.com:${githubUsername}/${name}.git`)
+  }
+
+  const cmd = commands.join(';')
+
+  execSync(cmd, { cwd: newAppDir })
 }
