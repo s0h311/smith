@@ -1,6 +1,6 @@
 {
   "name": "smith",
-  "version": "0.2",
+  "version": "0.3",
   "description": "Generates an empty TanStack Start project that is optimized for agentic engineering",
   "license": "Apache-2.0",
   "type": "module",
@@ -17,5 +17,5 @@
     "oxfmt": "^0.63.0",
     "typescript": "^7.0.2"
   },
-  "packageManager": "pnpm@11.1.2"
+  "packageManager": "pnpm@12.15.0"
 }
