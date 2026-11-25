@@ -12,6 +12,7 @@ const ENV_DB_PASSWORD_PLACEHOLDER = '<db-password>'
 const MATRIX_PATH_PLACEHOLDER = '<path-to-matrix>'
 const MATRIX_GITHUB_USERNAME_PLACEHOLDER = '<github-username>'
 const DRIZZLE_ADDITIONAL_SCHEMAS_PLACEHOLDER = ' <additional-schemas>'
+const COMPOSE_ADDITIONAL_ENV_VARS_PLACEHOLDER = 'additional-env-vars'
 
 const AUTH_SCHEMA_DESTINATION = 'server/infrastructure/Database/schemas/auth.ts'
 const AUTH_TEMPLATE_FILES = {
@@ -42,6 +43,11 @@ const AGENT_SKILLS = {
     'triage',
     'writing-for-agents',
   ],
+} as const
+
+const COMPOSE_ENV_VARS = {
+  auth: ['BETTER_AUTH_SECRET'],
+  mail: ['MAIL_SMTP_HOST', 'MAIL_SMTP_USER', 'MAIL_SMTP_PASSWORD', 'MAIL_FROM_NAME', 'MAIL_FROM_ADDRESS'],
 } as const
 
 export default defineCommand({
@@ -140,6 +146,16 @@ function clone({ name, githubUsername, withAuth, withSkills }: Args): void {
         {
           searchString: DRIZZLE_ADDITIONAL_SCHEMAS_PLACEHOLDER,
           replacement: withAuth ? `'${AUTH_SCHEMA_DESTINATION}',` : '',
+        },
+        {
+          searchString: COMPOSE_ADDITIONAL_ENV_VARS_PLACEHOLDER,
+          replacement: withAuth
+            ? ((): string => {
+                const additionalVars = [...COMPOSE_ENV_VARS.auth, ...COMPOSE_ENV_VARS.mail]
+
+                return additionalVars.map((envVar) => `${envVar}: \${${envVar}}`).join('\n')
+              })()
+            : '',
         },
       ],
     })
