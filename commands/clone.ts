@@ -12,7 +12,7 @@ const ENV_DB_PASSWORD_PLACEHOLDER = '<db-password>'
 const MATRIX_PATH_PLACEHOLDER = '<path-to-matrix>'
 const MATRIX_GITHUB_USERNAME_PLACEHOLDER = '<github-username>'
 const DRIZZLE_ADDITIONAL_SCHEMAS_PLACEHOLDER = ' <additional-schemas>'
-const COMPOSE_ADDITIONAL_ENV_VARS_PLACEHOLDER = 'additional-env-vars'
+const COMPOSE_ADDITIONAL_ENV_VARS_PLACEHOLDER = '<additional-env-vars>'
 
 const AUTH_SCHEMA_DESTINATION = 'server/infrastructure/Database/schemas/auth.ts'
 const AUTH_TEMPLATE_FILES = {
